@@ -1,4 +1,4 @@
-🛍️ My Shop – Next.js 15 + NextAuth
+🛍️ My Shop (GreenMart) – Next.js 15 + NextAuth
 
 A simple e-commerce demo built with Next.js 15 (App Router) and NextAuth.js.
 The app includes public pages (landing, product list, product details) and protected pages (dashboard with add product functionality).
