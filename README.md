@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+🛍️ My Shop – Next.js 15 + NextAuth
 
-## Getting Started
+A simple e-commerce demo built with Next.js 15 (App Router) and NextAuth.js.
+The app includes public pages (landing, product list, product details) and protected pages (dashboard with add product functionality).
 
-First, run the development server:
+🚀 Features
 
-```bash
+Landing Page (/)
+
+Navbar, Hero, Product Highlights, Footer
+
+Navigation to login and products
+
+Authentication with NextAuth (/login)
+
+Credential login (or extend with Google OAuth)
+
+Redirects to /products after successful login
+
+Products List (/products)
+
+Publicly accessible
+
+Loads products from services.json (mock data)
+
+Each product shows: name, description, price, details button
+
+Product Details (/products/[id])
+
+Displays full details of a product
+
+Publicly accessible
+
+Protected Dashboard (/dashboard/add-product)
+
+Only accessible to authenticated users
+
+Form to add a new product (stored in DB / mock backend)
+
+Redirects unauthenticated users to /login
+
+🛠️ Tech Stack
+
+Next.js 15 (App Router)
+
+NextAuth.js (Credentials / Social login)
+
+Tailwind CSS for styling
+
+MongoDB (or mock JSON) for product storage
+
+Deployed on Vercel
+
+⚙️ Installation & Setup
+
+Clone repo:
+
+git clone https://github.com/sariakhatun/GreenMart
+cd <your-repo>
+
+
+Install dependencies:
+
+npm install
+
+
+Setup environment variables (.env.local):
+
+NEXTAUTH_SECRET=your-secret
+NEXTAUTH_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+MONGODB_URI=your-mongodb-uri
+
+
+Run dev server:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Build for production:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+npm run build
+npm start
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+Deploy to Vercel:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+vercel --prod
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+📂 Route Summary
+Route	Access	Description
+/	Public	Landing page with navbar, hero, product highlights, footer
+/login	Public	NextAuth login page (credentials / Google)
+/products	Public	Product list with name, description, price
+/products/[id]	Public	Product details page
+/dashboard/add-product	Protected	Add new product (requires login)
+/api/auth/[...nextauth]	Public	NextAuth route handler
+/api/products	Protected (POST)	Add product via API
 
-## Deploy on Vercel
+🔗 Deployment Links
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+GitHub Repo: https://github.com/sariakhatun/GreenMart
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Live Demo (Vercel): https://yes-kj13hggvn-sariakhatuns-projects.vercel.app/
