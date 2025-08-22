@@ -2,17 +2,16 @@ import React from 'react'
 
 export default function WhyChoose() {
   return (
-    <div>
-      {/* ✅ New Section: Why Choose GreenMart */}
-{/* ✅ New Section: Customer Testimonials */}
-<section className="bg-gray-50 py-16 px-6">
+    <div className='w-full mx-auto'>
+      
+<section className="bg-gray-50 py-16 w-full mx-auto ">
   <h2 className="text-3xl font-bold text-gray-800 text-center mb-10">
     💬 What Our Customers Say
   </h2>
 
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+  <div className=" w-full mx-auto space-y-4">
     {/* Testimonial 1 */}
-    <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+    <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition w-full mx-auto">
       <p className="text-gray-600 italic">
         "GreenMart always delivers the freshest fruits and vegetables. I can trust them for my family's health."
       </p>

@@ -82,9 +82,16 @@ export default function Navbar() {
           </ul>
         </div>
         <div className="navbar-end">
-          <button onClick={()=>signIn()} className="btn btn-outline hover:bg-lime-600 hover:text-white border border-lime-500 text-lime-500">
-            Login
+         <div className="flex gap-2 items-center">
+          
+            <button onClick={()=>signIn()} className="btn btn-xs btn-outline hover:bg-lime-600 hover:text-white border border-lime-500 text-lime-500">
+              Login
+            </button>
+         
+          <button onClick={()=>signOut()} className="btn btn-xs btn-outline hover:bg-lime-600 hover:text-white border border-lime-500 text-lime-500">
+            Logout
           </button>
+         </div>
         </div>
       </div>
     </div>

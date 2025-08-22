@@ -12,13 +12,15 @@ providers: [
     // You can pass any HTML attribute to the <input> tag through the object.
     credentials: {
       username: { label: "Username", type: "text", placeholder: "jsmith" },
+      email: { label: "email", type: "email" },
       password: { label: "Password", type: "password" },
-      email: { label: "email", type: "email" }
+      
     },
     async authorize(credentials, req) {
       console.log('credentials from auth ',credentials)
       // Add logic here to look up the user from the credentials supplied
       const user = { id: "1", name: "J Smith", email: "jsmith@example.com" }
+
 
       if (user) {
         // Any object returned will be saved in `user` property of the JWT

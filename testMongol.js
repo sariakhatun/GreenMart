@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config(); // load .env.local variables
 
-const uri = process.env.MONGO_URL
+const uri = process.env.NEXT_PUBLIC_MONGO_URL
 const dbName = process.env.DB_Name;
 
 async function test() {

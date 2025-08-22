@@ -1,8 +1,14 @@
+
 import React from "react";
 import products from "../../../../public/services.json"; // JSON file
+import Link from "next/link";
 
 export default function ProductDetails({ params }) {
   const { id } = params;
+
+//   let handlePurchase=()=>{
+//     alert("Purchased Successfully")
+//   }
 
   // find product by id
   const product = products.find((item) => String(item.id) === String(id));
@@ -12,7 +18,7 @@ export default function ProductDetails({ params }) {
   }
 
   return (
-    <div className="max-w-2xl mt-20 mb-12 mx-auto bg-white shadow-lg rounded-2xl p-6 mt-10">
+    <div className="max-w-2xl mt-20 mb-12 mx-auto bg-white shadow-lg rounded-2xl p-6 ">
       {/* Image */}
       <img
         src={product.image}
@@ -58,6 +64,12 @@ export default function ProductDetails({ params }) {
           </span>
         ))}
       </div>
+       {/* Purchase Button */}
+      
+        <button className="w-full py-3 bg-lime-500 text-white rounded-lg hover:bg-lime-600 transition-colors">
+          Purchase
+        </button>
+     
 
       {/* ID shown at bottom for reference */}
       <p className="text-xs text-gray-400">Product ID: {product.id}</p>

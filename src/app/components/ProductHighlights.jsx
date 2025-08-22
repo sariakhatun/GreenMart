@@ -15,7 +15,7 @@ export default function ProductHighlights({ products }) {
         🌟 Product Highlights
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-full mx-auto">
         {topProducts.map((product) => (
           <div
             key={product.id}

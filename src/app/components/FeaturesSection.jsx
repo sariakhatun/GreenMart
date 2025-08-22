@@ -3,7 +3,7 @@ import React from "react";
 export default function FeaturesSection() {
   return (
     <section className="py-16 bg-gradient-to-b from-white to-green-50">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 text-center">
+      <div className="max-w-full mx-auto  text-center">
         <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 text-lime-600">
           Why Shop With GreenMart?
         </h2>
