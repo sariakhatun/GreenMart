@@ -56,6 +56,7 @@ Deployed on Vercel
 Clone repo:
 
 git clone https://github.com/sariakhatun/GreenMart
+
 cd <your-repo>
 
 
@@ -102,4 +103,4 @@ Route	Access	Description
 
 GitHub Repo: https://github.com/sariakhatun/GreenMart
 
-Live Demo (Vercel): https://yes-kj13hggvn-sariakhatuns-projects.vercel.app/
+Live (Vercel): https://yes-kj13hggvn-sariakhatuns-projects.vercel.app/
