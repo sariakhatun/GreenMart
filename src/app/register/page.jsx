@@ -1,88 +1,111 @@
 'use client'
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation' // import router
+import React from 'react'
+import Link from 'next/link'
 import { registerUser } from '../actions/auth/registerUser'
+import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
 
 export default function RegisterForm() {
-  const router = useRouter() // initialize router
-
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: ''
-  })
-  const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState('')
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+  let router=useRouter()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setLoading(true)
-    setMessage('')
+    
+    
+  const payload = {
+    name: e.target.name.value,
+    email: e.target.email.value,
+    password: e.target.password.value
+  }
+    //console.log(name, email, password)
+   //await registerUser(payload)
+   try {
+    const res = await registerUser(payload)
+    if (res?.insertedId) {
+      // Auto-login
+      const loginRes = await signIn('credentials', {
+        redirect: false,
+        email: payload.email,
+        password: payload.password
+      })
 
-    try {
-      const result = await registerUser(formData)
-      if (result.insertedId) {
-        setMessage('Registration successful!')
-        setFormData({ username: '', email: '', password: '' })
-
-        // redirect to products page after 1 second
-        setTimeout(() => {
-          router.push('/products')
-        }, 1000)
+      if (loginRes?.ok) {
+        router.push('/products') // redirect after login
+      } else {
+        alert('Registered but login failed. Please login manually.')
       }
-    } catch (err) {
-      setMessage('Error: ' + err.message)
+    } else {
+      alert('Registration failed. User may already exist.')
     }
-
-    setLoading(false)
+  } catch (err) {
+    console.error(err)
+    alert('Something went wrong. Please try again.')
+  }
   }
 
+  
+
   return (
-    <div className="max-w-md mt-24 mx-auto mb-64 p-6 border rounded shadow">
-      <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
-      {message && (
-        <p className="mb-4 text-center text-red-600">{message}</p>
-      )}
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded"
-        />
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+    <div className="flex flex-col min-h-screen justify-between bg-gray-50">
+      {/* Main Form Section */}
+      <div className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <form 
+          onSubmit={handleSubmit} 
+          className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg space-y-10"
         >
-          {loading ? 'Registering...' : 'Register'}
-        </button>
-      </form>
+          <h2 className="text-2xl font-bold text-center">Sign Up</h2>
+
+          <label className="form-control w-full mb-4">
+            <span className="label-text font-bold mb-2">Name</span>
+            <input
+              type="text"
+              placeholder="Type here"
+              className="input mt-2 mb-4 input-bordered w-full"
+              name="name"
+              required
+            />
+          </label>
+
+          <label className="form-control w-full">
+            <span className="label-text font-bold mb-1">Email</span>
+            <input
+              type="email"
+              name="email"
+              placeholder="Type here"
+              className="input mt-2 mb-4 input-bordered w-full"
+              required
+            />
+          </label>
+
+          <label className="form-control w-full">
+            <span className="label-text font-bold mb-1">Password</span>
+            <input
+              type="password"
+              name="password"
+              placeholder="Type here"
+              className="input mt-2 mb-4 input-bordered w-full"
+              required
+            />
+          </label>
+
+          <button 
+            type="submit" 
+            className="w-full h-12 bg-lime-500 text-white font-bold rounded hover:bg-lime-600 transition"
+          >
+            Sign Up
+          </button>
+
+          <p className="text-center text-sm text-gray-600">
+            Already have an account?{" "}
+            <Link href="/login" className="text-lime-500 font-bold">
+              Login
+            </Link>
+          </p>
+        </form>
+      </div>
+
+      {/* Footer */}
+      
     </div>
   )
 }

@@ -1,20 +1,32 @@
-
 import React from "react";
-import products from "../../../../public/services.json"; // JSON file
+import { ObjectId } from "mongodb";
+
 import Link from "next/link";
+import dbConnect from "@/lib/dbConnect";
 
-export default function ProductDetails({ params }) {
+export default async function ProductDetails({ params }) {
+  // const { _id } = params;
+  // console.log("_id from params:", _id);
   const { id } = params;
+  console.log("id from params:", id);
 
-//   let handlePurchase=()=>{
-//     alert("Purchased Successfully")
-//   }
+  //   let handlePurchase=()=>{
+  //     alert("Purchased Successfully")
+  //   }
+  // Get the "products" collection
+  const productsCollection = await dbConnect("services");
+
+  // Fetch all products
+  const products = await productsCollection.find({}).toArray();
 
   // find product by id
-  const product = products.find((item) => String(item.id) === String(id));
+  //const product = products.find((item) => String(item._id) === String(_id));
+  const product = await productsCollection.findOne({ _id: new ObjectId(id) });
 
   if (!product) {
-    return <h2 className="text-center text-red-500">Product not found</h2>;
+    return (
+      <h2 className="text-center text-red-500 mt-24">Product not found</h2>
+    );
   }
 
   return (
@@ -36,7 +48,8 @@ export default function ProductDetails({ params }) {
 
       {/* Price & Unit */}
       <p className="text-xl font-semibold text-green-600 mb-2">
-        ${product.price} <span className="text-gray-500 text-base">{product.unit}</span>
+        ${product.price}{" "}
+        <span className="text-gray-500 text-base">{product.unit}</span>
       </p>
 
       {/* Short & Long Description */}
@@ -64,15 +77,16 @@ export default function ProductDetails({ params }) {
           </span>
         ))}
       </div>
-       {/* Purchase Button */}
-      
-        <button className="w-full py-3 bg-lime-500 text-white rounded-lg hover:bg-lime-600 transition-colors">
-          Purchase
-        </button>
-     
+      {/* Purchase Button */}
+
+      <button className="w-full py-3 bg-lime-500 text-white rounded-lg hover:bg-lime-600 transition-colors">
+        Purchase
+      </button>
 
       {/* ID shown at bottom for reference */}
-      <p className="text-xs text-gray-400">Product ID: {product.id}</p>
+      <p className="text-xs text-gray-400">
+        Product ID: {product._id.toString()}
+      </p>
     </div>
   );
 }

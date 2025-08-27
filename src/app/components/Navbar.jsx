@@ -2,10 +2,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signOut } from "next-auth/react"
 
 export default function Navbar() {
   const pathname = usePathname();
+  let {data:session,status} = useSession();
+
+  console.log(session)
 
   const linkClasses = (path) =>
     pathname === path
@@ -83,14 +86,30 @@ export default function Navbar() {
         </div>
         <div className="navbar-end">
          <div className="flex gap-2 items-center">
-          
-            <button onClick={()=>signIn()} className="btn btn-xs btn-outline hover:bg-lime-600 hover:text-white border border-lime-500 text-lime-500">
+          {
+            status == 'authenticated' ? 
+          <button onClick={()=>signOut()} className="btn btn-xs btn-outline hover:bg-lime-600 hover:text-white border border-lime-500 text-lime-500">
+              Logout
+            </button>
+        
+            
+         
+          : <>
+          <Link href={'/login'}>
+          <button className="btn btn-xs btn-outline hover:bg-lime-600 hover:text-white border border-lime-500 text-lime-500">
               Login
             </button>
-         
-          <button onClick={()=>signOut()} className="btn btn-xs btn-outline hover:bg-lime-600 hover:text-white border border-lime-500 text-lime-500">
-            Logout
+          </Link>
+            
+         <Link href={'/register'}>
+          <button className="btn btn-xs btn-outline hover:bg-lime-600 hover:text-white border border-lime-500 text-lime-500">
+            Register
           </button>
+         </Link>
+         </>
+          }
+          
+          
          </div>
         </div>
       </div>

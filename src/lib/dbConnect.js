@@ -1,30 +1,47 @@
-import dotenv from "dotenv";
-dotenv.config(); // MUST be first
-
 import { MongoClient, ServerApiVersion } from "mongodb";
 
-export default function dbConnect(collectionName) {
-  const uri = process.env.NEXT_PUBLIC_MONGO_URL;
-  const dbName = process.env.DB_Name;
+const uri = process.env.MONGO_URL; // <-- use secure env var (not NEXT_PUBLIC)
+const dbName = process.env.DB_NAME;
 
-  console.log("atlas uri:", uri);
+export const collectionNamesObj = {
+    servicesCollection: "test_services",
+    userCollection: "test_user",
+    
+}
+if (!uri) {
+  throw new Error("❌ MONGO_URL not found in environment variables");
+}
 
-  const client = new MongoClient(uri, {
+let client;
+let clientPromise;
+
+if (process.env.NODE_ENV === "development") {
+  // In dev, reuse the client between hot reloads
+  if (!global._mongoClientPromise) {
+    client = new MongoClient(uri, {
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      },
+    });
+    global._mongoClientPromise = client.connect();
+  }
+  clientPromise = global._mongoClientPromise;
+} else {
+  // In production, always create a new connection
+  client = new MongoClient(uri, {
     serverApi: {
       version: ServerApiVersion.v1,
       strict: true,
       deprecationErrors: true,
-    }
+    },
   });
-
-  return client.db(dbName).collection(collectionName);
+  clientPromise = client.connect();
 }
 
-
-
-async function test() {
-  const collection = await dbConnect('testCollection');
-  console.log('Connected to collection:', collection.collectionName);
+export default async function dbConnect(collectionName) {
+  const client = await clientPromise; // ✅ ensure connection
+  const db = client.db(dbName);
+  return db.collection(collectionName);
 }
-
-test();
