@@ -4,7 +4,7 @@ const uri = process.env.MONGO_URL; // <-- use secure env var (not NEXT_PUBLIC)
 const dbName = process.env.DB_NAME;
 
 export const collectionNamesObj = {
-    servicesCollection: "test_services",
+  productionCollection: "services", // MongoDB collection name
     userCollection: "test_user",
     
 }

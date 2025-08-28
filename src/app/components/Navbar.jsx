@@ -77,11 +77,15 @@ export default function Navbar() {
                 Products
               </Link>
             </li>
-            <li>
+            {
+              status=='authenticated' &&
+              <li>
               <Link href="/add-product" className={linkClasses("/add-product")}>
                 Add Product
               </Link>
             </li>
+            }
+            
           </ul>
         </div>
         <div className="navbar-end">
